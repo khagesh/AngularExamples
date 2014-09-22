@@ -1,0 +1,9 @@
+{
+	"name": "Learn-Angular-JS-Khagesh",
+	"version": "0.0.1",
+	"description": "Includes all concepts of Angular JS inside all the files have different concepts of Angular JS",
+	"dependencies": {
+		"serve-static": "1.6.2",
+		"connect": "3.2.0"
+	}
+}

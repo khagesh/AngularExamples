@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Angular Overview</title>		
+	</head>
+	<body>
+		<section ng-app>
+			<h3>Default binding of AngularJS</h3>
+			<p ng-init="name='khagesh'">Hello {{name}}</p>
+		</section>
+		<section class="manual-bootstrap">
+			<h3>Default binding of AngularJS</h3>
+			<p ng-init="name='Manual Bootstrap'">Hello {{name}}</p>
+		</section>
+		
+		<!-- jQuery is needed for manual bootstrap -->
+		<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript">
+			angular.element(document).ready(function(){
+				angular.bootstrap(angular.element(".manual-bootstrap"));
+			});
+		</script>
+	</body>
+</html>

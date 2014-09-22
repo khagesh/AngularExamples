@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app="app">
+	<head>
+		<title>Angular Injector</title>		
+	</head>
+	<body>
+		<section>
+			<h4>Using injector of AngularJS do dynamically load services</h4>
+			<section ng-controller="InjectorController">
+				<h5>{{dynamicService}}</h5>
+				<p>{{deps | json}}</p>
+			</section>
+		</section>
+		<section>
+			<h4>Using injector to compile and bind controller data to dynamically added data via jQuery</h4>
+			<div class="dynamic-controller"></div>
+		</section>
+		<!--jQuery is needed to dynamically add controller and services-->
+		<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript">
+			var app = angular.module("app", []);
+			app.factory("ksUrl", ["$http", "$location", "$window", "$rootScope", function($http, $location, $window, $rootScope){
+				var service = {};
+				service.depsElement = ["1", "2"];
+				
+				return service;
+			}]);
+			
+			app.controller("InjectorController", ["$scope", "$injector", function($scope, $injector){
+				$scope.dynamicService = "Service to show the dynamic dependencies";
+				$scope.deps = $injector.has("ksUrl") ? $injector.annotate(["$http", "$location", "$window", "$rootScope", function($http, $location, $window, $rootScope){
+				var service = {};
+				
+				return service;
+			}]) : ["No deps found"];
+			}]);
+			
+			app.controller("DynamicController", ["$scope", "$injector", function($scope, $injector){
+					var ksUrlService = $injector.get("ksUrl");
+					$scope.depsElement = ksUrlService.depsElement;
+				}]);
+				
+			
+				// Add a dynamically generated expression to the Angular scope
+				var $div = $('<div ng-controller="DynamicController"><p>{{depsElement | json}}</p></div>');
+				angular.element(".dynamic-controller").append($div);
+				
+				angular.element(document).injector().invoke(["$compile", function($compile){
+					var scope = angular.element($div).scope();
+					$compile($div)(scope);
+				}]);
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "learn-AngularJS-Khagesh",
+  "version": "0.0.1",
+  "authors": [
+    "khagesh <khageshhiet@gmail.com>"
+  ],
+  "description": "contains all files used for learning basics to advance concepts",
+  "dependencies": {
+    "angular": "1.2.25",
+    "jquery": "~2.1.1"
+  },
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "AngularJS"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
