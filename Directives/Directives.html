@@ -1,8 +1,31 @@
-<html>
+<!doctype html>
+<html ng-app="Directives">
 	<head>
 		<title>Angular Directives</title>		
 	</head>
 	<body>
+		<section ng-controller="DirectiveController">
+			<h4>Using custom directive</h4>
+			{{name}}
+			<learn-address></learn-address>
+		</section>
 		
-	</body>
+		<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript">
+			
+			var directiveModule = angular.module("Directives.directives", []);
+			var directives = angular.module("Directives", ["Directives.directives"]);
+			
+			directives.controller("DirectiveController", ["$scope", function($scope){
+				$scope.name = "Nick";
+				$scope.address = "Fury!";
+			}]).directive("learnAddress", function(){
+				return {
+					restrict: 'E',
+					template: "Author name is {{name}} {{address}}"
+				};
+			});
+			
+		</script>
+	</body>	
 </html>
