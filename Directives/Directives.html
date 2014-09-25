@@ -1,31 +1,83 @@
-<!doctype html>
+<!DOCTYPE html>
 <html ng-app="Directives">
-	<head>
-		<title>Angular Directives</title>		
-	</head>
-	<body>
-		<section ng-controller="DirectiveController">
-			<h4>Using custom directive</h4>
-			{{name}}
-			<learn-address></learn-address>
-		</section>
-		
-		<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
-		<script type="text/javascript">
-			
-			var directiveModule = angular.module("Directives.directives", []);
-			var directives = angular.module("Directives", ["Directives.directives"]);
-			
-			directives.controller("DirectiveController", ["$scope", function($scope){
-				$scope.name = "Nick";
-				$scope.address = "Fury!";
-			}]).directive("learnAddress", function(){
-				return {
-					restrict: 'E',
-					template: "Author name is {{name}} {{address}}"
-				};
-			});
-			
-		</script>
-	</body>	
+<head>
+    <title>Angular Directives</title>
+</head>
+<body>
+<section ng-controller="DirectiveController">
+    <h4>Using custom directive</h4>
+    {{name}}
+    <learn-address></learn-address>
+
+    <learn-customers customers="customers"></learn-customers>
+    <learn-print-scope scope-view-model="customers"></learn-print-scope>
+</section>
+
+<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript">
+
+    var directiveModule = angular.module("Directives.directives", []);
+    var directives = angular.module("Directives", ["Directives.directives"]);
+
+    directives.controller("DirectiveController",
+            ["$scope", "$interval", function($scope, $interval){
+                $scope.name = "Nick";
+                $scope.address = "Fury!";
+                $scope.customers = [
+                    { name: "Customer 1", address: "address for customer 1" },
+                    { name: "Customer 2", address: "address for customer 2" }
+                ];
+
+                // Add some more customers to the view model
+                // so that we can see live binding examples
+                $interval(function () {
+                    $scope.customers.push({
+                        name:"Another customer name",
+                        address: "another customer address"
+                    })
+                }, 5000, 3);
+
+    }]).directive("learnAddress", function(){
+        return {
+            restrict: 'E',
+            template: "Author name is {{name}} {{address}}"
+        };
+    });
+
+    directiveModule.directive({
+        "learnCustomers": [function(){
+            return {
+                restrict: 'E',
+                controller: ["$scope", function ($scope) {
+                    $scope.name = "some name from above scope";
+                }],
+                scope: {
+                    customers: '=customers'
+                },
+                templateUrl: 'customer.html'
+            };
+        }],
+        "learnCustomer": [function () {
+            return {
+                restrict: 'E',
+                scope: {
+                    customerName: '=name',
+                    customerAddress: '=address'
+                },
+                template: '{{name}}our customer {{customerName}} live at {{customerAddress}}'
+            }
+        }],
+        "learnPrintScope": [function () {
+            return {
+                restrict: 'E',
+                scope: {
+                    parentScope: "=scopeViewModel"
+                },
+                template: "value for parent scope is {{parentScope | json}}"
+            }
+        }]
+    });
+
+</script>
+</body>
 </html>

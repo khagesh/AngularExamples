@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Advance concepts of Angular directives</title>
+</head>
+<body>
+    <section ng-controller="DirectiveController">
+        <h4>Advance directive concepts</h4>
+        <div>
+
+        </div>
+    </section>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+
+        app.controller({
+            DirectiveController: ["$scope", function ($scope) {
+                $scope.customers = [
+                    {
+                        name: "name 1",
+                        address: "address 1"
+                    }
+                ];
+            }]
+        });
+
+    </script>
+</body>
+</html>
