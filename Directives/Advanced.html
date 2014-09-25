@@ -7,23 +7,41 @@
 <body>
     <section ng-controller="DirectiveController">
         <h4>Advance directive concepts</h4>
-        <div>
-
-        </div>
+        <learn-time time="time"></learn-time>
     </section>
-    <script src="../bower_components/angular/angular.min.js"></script>
+
+    <script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="../bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         var app = angular.module('app', []);
 
         app.controller({
-            DirectiveController: ["$scope", function ($scope) {
-                $scope.customers = [
-                    {
-                        name: "name 1",
-                        address: "address 1"
-                    }
-                ];
+            DirectiveController: ["$scope", "$interval", function ($scope, $interval) {
+                $scope.time = new Date();
+                $interval(function () {
+                    $scope.time = new Date();
+                }, 1000, 50);
             }]
+        });
+
+        /**
+         * @ngdoc directive
+         * @name learnTime
+         */
+        app.directive('learnTime', function factory() {
+            var directiveDefinitionObject = {
+                restrict: 'E',
+                scope: {
+                    time: "=time"
+                },
+                compile: function compile(tElement) {
+                    ///<summary> Compile function to update the template DOM</summary>
+                    tElement.find(".time-css").text("{{time | date:'M/d/yy h:mm:ss a'}}");
+                },
+                template: "<span class='time-css'></span>"
+            };
+
+            return directiveDefinitionObject;
         });
 
     </script>

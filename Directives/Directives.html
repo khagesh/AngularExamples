@@ -11,8 +11,10 @@
 
     <learn-customers customers="customers"></learn-customers>
     <learn-print-scope scope-view-model="customers"></learn-print-scope>
+
 </section>
 
+<script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript">
 
@@ -74,6 +76,11 @@
                     parentScope: "=scopeViewModel"
                 },
                 template: "value for parent scope is {{parentScope | json}}"
+            }
+        }],
+        "learnUpdateTime":[function () {
+            return {
+
             }
         }]
     });
